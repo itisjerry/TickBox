@@ -1,3 +1,17 @@
+import { readEnv } from './envGuard.js';
+
+let app, auth, db, appId;
+let envError = null;
+
+try {
+  const { appId: _appId, firebaseConfig } = readEnv();
+  appId = _appId;
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+} catch (e) {
+  envError = e;
+}
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
